@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Subscape",
+    "name": "Subhub",
     "version": "1.0",
     "description": "Manage OTT and other subscriptions.",
     "permissions": ["activeTab"],
@@ -20,9 +20,6 @@
     //   "48": "assets/icon48.png",
     //   "128": "assets/icon128.png"
     // },
-    "browser_action": {
-      "default_popup": "popup/popup.html"
-    },
     "options_ui": {
       "page": "options/options.html",
       "open_in_tab": true

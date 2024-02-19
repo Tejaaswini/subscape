@@ -1,6 +1,55 @@
 /* Popup styles go here */
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
-  }
-  
+    min-width: 300px;
+}
+
+h1{
+    text-align: center;
+}
+
+.container{
+    margin-top: 0;
+    width: 100vw;
+}
+
+h3{
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.cancel-btn, .view-btn {
+    margin-left: 10px;
+    width: 120px;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.cancel-btn {
+    background-color: rgb(232, 0, 0);
+}
+
+.view-btn {
+    background-color: rgb(0, 118, 177);
+}
+
+.plus-button {
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 120px;
+    height: 40px;
+    background-color: rgb(0, 177, 118);
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.input-field {
+    margin-bottom: 10px;
+}

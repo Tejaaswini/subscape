@@ -3,12 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subscription Manager</title>
+  <title>Subhub</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>Subscription Manager Popup</h1>
-  <p>This is the popup content.</p>
+  <h1>Subscape</h1>
+
+  <!-- Subscription List -->
+  <ul id="subscription-list">
+    <!-- Netflix Subscription -->
+    <li class="subscription">
+      <h3>Netflix</h3>
+      <button class="view-btn" data-provider="netflix">View</button>
+      <button class="cancel-btn" data-provider="netflix">Cancel</button>
+    </li>
+    <!-- Amazon Prime Subscription -->
+    <li class="subscription">
+      <h3>Amazon Prime</h3>
+      <button class="view-btn" data-provider="amazon">View</button>
+      <button class="cancel-btn" data-provider="amazon">Cancel</button>
+    </li>
+  </ul>
+
+  <!-- Plus Button to add a new subscription -->
+  <button class="plus-button" id="add-subscription-btn">+</button>
+
+  <!-- Form to add a new subscription -->
+  <div id="add-subscription-form" style="display: none;">
+    <input type="text" id="subscription-name" class="input-field" placeholder="Subscription Name">
+    <input type="text" id="subscription-url" class="input-field" placeholder="Subscription URL">
+    <input type="text" id="subscription-cancel-url" class="input-field" placeholder="Subscription Settings URL">
+    <input type="date" id="subscription-start-date" class="input-field" placeholder="Start Date">
+    <button id="save-subscription-btn">Save</button>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>
