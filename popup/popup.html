@@ -1,42 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subhub</title>
   <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
-  <h1>Subscape</h1>
+  <!-- Login Section -->
+  <div id="login-section" class="login-section">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="text" id="username" class="input-field" placeholder="Username">
+      <input type="password" id="password" class="input-field" placeholder="Password">
+      <button type="submit" id="login-btn">Login</button>
+    </form>
+    <p>Don't have an account? <a href="#register-section">Register</a></p>
+    <p>Forgot password? <a href="#forgot-password-section">Reset</a></p>
+  </div>
+
+
+  <!-- Registration Section -->
+  <div id="register-section" class="register-section" style="display: none;">
+    <h2>Register</h2>
+    <form id="register-form">
+      <input type="text" id="new-username" class="input-field" placeholder="Username">
+      <input type="email" id="new-email" class="input-field" placeholder="Email">
+      <input type="password" id="new-password" class="input-field" placeholder="Password">
+      <input type="password" id="reenter-new-password" class="input-field" placeholder="Re-enter Password">
+      <button type="submit" id="register-btn">Register</button>
+    </form>
+  </div>
+
+  <!-- Forgot Password Section -->
+  <div id="forgot-password-section" class="forgot-password-section" style="display: none;">
+    <h2>Forgot Password</h2>
+    <form id="forgot-password-form">
+      <input type="email" id="forgot-email" class="input-field" placeholder="Email">
+      <button type="submit" id="forgot-password-btn">Submit</button>
+    </form>
+  </div>
+
+  <!-- Enter Verification Code for Passsword reset -->
+  <div id="verification-code-section" style="display: none;">
+    <h2>Enter Verification Code</h2>
+    <form id="verification-code-form">
+      <input type="text" id="verification-code" class="input-field" placeholder="Verification Code">
+      <button type="submit" id="verify-code-btn">Verify</button>
+    </form>
+  </div>
 
   <!-- Subscription List -->
-  <ul id="subscription-list">
+  <div id="subscription-list" style="display: none">
     <!-- Netflix Subscription -->
-    <li class="subscription">
-      <h3>Netflix</h3>
-      <button class="view-btn" data-provider="netflix">View</button>
-      <button class="cancel-btn" data-provider="netflix">Cancel</button>
-    </li>
-    <!-- Amazon Prime Subscription -->
-    <li class="subscription">
-      <h3>Amazon Prime</h3>
-      <button class="view-btn" data-provider="amazon">View</button>
-      <button class="cancel-btn" data-provider="amazon">Cancel</button>
-    </li>
-  </ul>
+    <ul>
+      <li class="subscription">
+        <h3>Netflix</h3>
+        <button class="view-btn" data-provider="netflix">View</button>
+        <button class="cancel-btn" data-provider="netflix">Cancel</button>
+      </li>
+      <!-- Amazon Prime Subscription -->
+      <li class="subscription">
+        <h3>Amazon Prime</h3>
+        <button class="view-btn" data-provider="amazon">View</button>
+        <button class="cancel-btn" data-provider="amazon">Cancel</button>
+      </li>
+    </ul>
 
-  <!-- Plus Button to add a new subscription -->
-  <button class="plus-button" id="add-subscription-btn">+</button>
-
+    <!-- Plus Button to add a new subscription -->
+    <button class="plus-button" id="add-subscription-btn">+</button>
+  </div>
   <!-- Form to add a new subscription -->
-  <div id="add-subscription-form" style="display: none;">
+  <div id="add-subscription-form" class="form-section" style="display: none;">
     <input type="text" id="subscription-name" class="input-field" placeholder="Subscription Name">
     <input type="text" id="subscription-url" class="input-field" placeholder="Subscription URL">
     <input type="text" id="subscription-cancel-url" class="input-field" placeholder="Subscription Settings URL">
     <input type="date" id="subscription-start-date" class="input-field" placeholder="Start Date">
-    <button id="save-subscription-btn">Save</button>
-  </div>
+    <button id="save-subscription-btn" class="action-btn">Save</button>
+  </div>  
 
   <script src="popup.js"></script>
+  <script>
+    // Handle login form submission
+    document.getElementById('login-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Check if username and password are correct (for demonstration purposes)
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      // For demonstration, let's assume any non-empty username and password combination is valid
+      if (username.trim() !== '' && password.trim() !== '') {
+        document.getElementById('login-section').style.display = 'none'; // Hide login section
+        document.getElementById('subscription-list').style.display = 'block'; // Show subscription list
+      }
+    });
+
+
+    // Handle register link click
+    document.querySelector('#login-section a[href="#register-section"]').addEventListener('click', function (event) {
+      event.preventDefault();
+      document.getElementById('login-section').style.display = 'none'; // Hide login section
+      document.getElementById('register-section').style.display = 'block'; // Show register section
+    });
+
+    // Handle forgot password link click
+    document.querySelector('#login-section a[href="#forgot-password-section"]').addEventListener('click', function (event) {
+      event.preventDefault();
+      document.getElementById('login-section').style.display = 'none'; // Hide login section
+      document.getElementById('forgot-password-section').style.display = 'block'; // Show forgot password section
+    });
+
+    // Handle verification code form submission
+    document.getElementById('verification-code-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+      // Check if verification code is correct (for demonstration purposes)
+      var verificationCode = document.getElementById('verification-code').value;
+      if (verificationCode.trim() !== '') {
+        document.getElementById('verification-code-section').style.display = 'none'; // Hide verification code section
+        document.getElementById('subscription-list').style.display = 'block'; // Show subscription list
+      }
+    });
+
+    document.getElementById('add-subscription-btn').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default button behavior
+
+      // Hide all sections except the add-subscription-form
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('register-section').style.display = 'none';
+      document.getElementById('forgot-password-section').style.display = 'none';
+      document.getElementById('verification-code-section').style.display = 'none';
+      document.getElementById('subscription-list').style.display = 'none';
+
+      // Display the add-subscription-form section
+      document.getElementById('add-subscription-form').style.display = 'block';
+    });
+
+  </script>
 </body>
+
 </html>
