@@ -39,7 +39,7 @@
   <div id="forgot-password-section" class="forgot-password-section" style="display: none;">
     <h2>Forgot Password</h2>
     <form id="forgot-password-form">
-      <input type="email" id="forgot-email" class="input-field" placeholder="Email">
+      <input type="text" id="forgot-username" class="input-field" placeholder="Username">
       <button type="submit" id="forgot-password-btn">Submit</button>
     </form>
   </div>
@@ -287,6 +287,54 @@ function getSubscriptions(username) {
       console.error('Error fetching subscriptions:', error);
     });
 }
+
+// Handle forgot password link click
+document.querySelector('#login-section a[href="#forgot-password-section"]').addEventListener('click', function (event) {
+  event.preventDefault();
+  document.getElementById('login-section').style.display = 'none'; // Hide login section
+  document.getElementById('forgot-password-section').style.display = 'block'; // Show forgot password section
+});
+
+// Handle forgot password form submission
+document.getElementById('forgot-password-form').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Get the entered email
+  var username = document.getElementById('forgot-username').value;
+
+  // Prepare data to send to the API
+  var forgotPasswordData = {
+    username: username
+  };
+
+  // Send a POST request to the forgot password API endpoint
+  fetch('https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-forgot-password', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(forgotPasswordData)
+  })
+    .then(response => {
+      if (response.ok) {
+        // If password reset email sent successfully, display a success message
+        alert('Succesfully resent verification code');
+        // Hide forgot password section
+        document.getElementById('forgot-password-section').style.display = 'none';
+        // Show login section again
+        document.getElementById('login-section').style.display = 'block';
+      } else {
+        // If password reset fails, display an error message
+        alert('Password reset failed. Please try again later.');
+      }
+    })
+    .catch(error => {
+      // Handle any errors that occur during the fetch request
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.');
+    });
+});
+
 
 
   </script>
