@@ -27,6 +27,7 @@
     <h2>Register</h2>
     <form id="register-form">
       <input type="text" id="new-username" class="input-field" placeholder="Username">
+      <input type="text" id="new-name" class="input-field" placeholder="Name">
       <input type="email" id="new-email" class="input-field" placeholder="Email">
       <input type="password" id="new-password" class="input-field" placeholder="Password">
       <input type="password" id="reenter-new-password" class="input-field" placeholder="Re-enter Password">
@@ -43,13 +44,20 @@
     </form>
   </div>
 
-  <!-- Enter Verification Code for Passsword reset -->
+  <!-- Enter Verification Code for user verification -->
   <div id="verification-code-section" style="display: none;">
     <h2>Enter Verification Code</h2>
     <form id="verification-code-form">
-      <input type="text" id="verification-code" class="input-field" placeholder="Verification Code">
+      <input type="text" id="verification-code" class="input-field" placeholder="Verification Code" pattern="[0-9]{6}"
+        required>
       <button type="submit" id="verify-code-btn">Verify</button>
     </form>
+  </div>
+
+
+  <!-- Subscription Cards Section -->
+  <div id="subscription-cards" style="display: none;">
+    <!-- Cards will be dynamically added here -->
   </div>
 
   <!-- Subscription List -->
@@ -79,64 +87,207 @@
     <input type="text" id="subscription-cancel-url" class="input-field" placeholder="Subscription Settings URL">
     <input type="date" id="subscription-start-date" class="input-field" placeholder="Start Date">
     <button id="save-subscription-btn" class="action-btn">Save</button>
-  </div>  
+  </div>
 
   <script src="popup.js"></script>
   <script>
-    // Handle login form submission
-    document.getElementById('login-form').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent form submission
 
-      // Check if username and password are correct (for demonstration purposes)
-      var username = document.getElementById('username').value;
-      var password = document.getElementById('password').value;
 
-      // For demonstration, let's assume any non-empty username and password combination is valid
-      if (username.trim() !== '' && password.trim() !== '') {
-        document.getElementById('login-section').style.display = 'none'; // Hide login section
-        document.getElementById('subscription-list').style.display = 'block'; // Show subscription list
+ // Handle login form submission
+document.getElementById('login-form').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Check if username and password are correct (for demonstration purposes)
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+
+  // Prepare data to send to the API
+  var data = {
+    username: username,
+    password: password
+  };
+
+  // For demonstration, let's assume any non-empty username and password combination is valid
+  if (username.trim() !== '' && password.trim() !== '') {
+    // Send a POST request to the API endpoint
+    fetch('https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => {
+        if (response.ok) {
+          // If login is successful, show the subscription list
+          document.getElementById('login-section').style.display = 'none';
+          document.getElementById('subscription-list').style.display = 'block';
+          // Call getSubscriptions function with the username
+          getSubscriptions(username);
+        } else {
+          // If login fails, display an error message
+          alert('Login failed. Please check your credentials.');
+        }
+      })
+      .catch(error => {
+        // Handle any errors that occur during the fetch request
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+      });
+  }
+});
+
+// Handle register link click
+document.querySelector('#login-section a[href="#register-section"]').addEventListener('click', function (event) {
+  event.preventDefault();
+  document.getElementById('login-section').style.display = 'none'; // Hide login section
+  document.getElementById('register-section').style.display = 'block'; // Show register section
+});
+
+// Handle register form submission
+document.getElementById('register-form').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Get the entered username and password
+  var newUsername = document.getElementById('new-username').value;
+  var newPassword = document.getElementById('new-password').value;
+  var newEmail = document.getElementById('new-email').value;
+  var newName = document.getElementById('new-name').value;
+
+  // Prepare data to send to the API
+  var registerData = {
+    username: newUsername,
+    password: newPassword,
+    email: newEmail,
+    name: newName
+  };
+
+  console.log(registerData);
+
+  // Send a POST request to the signup API endpoint
+  fetch('https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(registerData)
+  })
+    .then(response => {
+      if (response.ok) {
+        // If signup is successful, display a success message
+        alert('Signup successful! Please check your email for verification.');
+        // Hide register section and show verification code section
+        document.getElementById('register-section').style.display = 'none';
+        document.getElementById('verification-code-section').style.display = 'block';
+      } else {
+        // If signup fails, display an error message
+        alert('Signup failed. Please try again later.');
       }
+    })
+    .catch(error => {
+      // Handle any errors that occur during the fetch request
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.');
     });
+});
 
+// Handle verification code form submission
+document.getElementById('verification-code-form').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent form submission
 
-    // Handle register link click
-    document.querySelector('#login-section a[href="#register-section"]').addEventListener('click', function (event) {
-      event.preventDefault();
-      document.getElementById('login-section').style.display = 'none'; // Hide login section
-      document.getElementById('register-section').style.display = 'block'; // Show register section
-    });
+  // Get the entered verification code
+  var verificationCode = document.getElementById('verification-code').value;
 
-    // Handle forgot password link click
-    document.querySelector('#login-section a[href="#forgot-password-section"]').addEventListener('click', function (event) {
-      event.preventDefault();
-      document.getElementById('login-section').style.display = 'none'; // Hide login section
-      document.getElementById('forgot-password-section').style.display = 'block'; // Show forgot password section
-    });
-
-    // Handle verification code form submission
-    document.getElementById('verification-code-form').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent form submission
-      // Check if verification code is correct (for demonstration purposes)
-      var verificationCode = document.getElementById('verification-code').value;
-      if (verificationCode.trim() !== '') {
-        document.getElementById('verification-code-section').style.display = 'none'; // Hide verification code section
-        document.getElementById('subscription-list').style.display = 'block'; // Show subscription list
+  // Send the verification code to the API endpoint
+  fetch('https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-confirm-signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username: document.getElementById('new-username').value,
+      confCode: verificationCode
+    })
+  })
+    .then(response => {
+      if (response.ok) {
+        // Handle successful verification
+        // For example, show a success message and redirect the user
+        console.log('Verification successful');
+        // Redirect the user to a new page or perform other actions
+        document.getElementById('verification-code-section').style.display = 'none';
+        document.getElementById('subscription-list').style.display = 'block';
+      } else {
+        // Handle verification error
+        // For example, show an error message to the user
+        console.error('Verification failed');
       }
+    })
+    .catch(error => {
+      console.error('Error verifying code:', error);
     });
+});
 
-    document.getElementById('add-subscription-btn').addEventListener('click', function (event) {
-      event.preventDefault(); // Prevent default button behavior
+document.getElementById('add-subscription-btn').addEventListener('click', function (event) {
+  event.preventDefault(); // Prevent default button behavior
 
-      // Hide all sections except the add-subscription-form
-      document.getElementById('login-section').style.display = 'none';
-      document.getElementById('register-section').style.display = 'none';
-      document.getElementById('forgot-password-section').style.display = 'none';
-      document.getElementById('verification-code-section').style.display = 'none';
-      document.getElementById('subscription-list').style.display = 'none';
+  // Hide all sections except the add-subscription-form
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('register-section').style.display = 'none';
+  document.getElementById('forgot-password-section').style.display = 'none';
+  document.getElementById('verification-code-section').style.display = 'none';
+  document.getElementById('subscription-list').style.display = 'none';
 
-      // Display the add-subscription-form section
-      document.getElementById('add-subscription-form').style.display = 'block';
+  // Display the add-subscription-form section
+  document.getElementById('add-subscription-form').style.display = 'block';
+});
+
+// get subscriptions
+function getSubscriptions(username) {
+  fetch(`https://7se83qeyid.execute-api.us-east-1.amazonaws.com/dev/subscriptions/list/${username}`)
+    .then(response => response.json())
+    .then(data => {
+      // Clear any existing subscription cards
+      const subscriptionCards = document.getElementById('subscription-cards');
+      subscriptionCards.innerHTML = '';
+
+      console.log(data)
+      const jsonData = data; // No need to parse again
+      const subscriptions = jsonData.subscriptions;
+
+      console.log(subscriptions);
+      console.log('Subscriptions:', jsonData.subscriptions);
+
+      // Loop through the subscription data and create cards
+      jsonData.subscriptions.forEach(subscription => {
+        const card = document.createElement('div');
+        card.classList.add('subscription-card');
+
+        // Create elements for displaying subscription details
+
+        const vendorNameElement = document.createElement('p');
+        vendorNameElement.textContent = `Vendor Name: ${subscription.vendor_name}`;
+        card.appendChild(vendorNameElement);
+
+        const vendorURLElement = document.createElement('p');
+        vendorURLElement.textContent = `Vendor URL: ${subscription.vendor_url}`;
+        card.appendChild(vendorURLElement);
+
+        const durationElement = document.createElement('p');
+        durationElement.textContent = `Duration: ${subscription.duration}`;
+        card.appendChild(durationElement);
+
+        subscriptionCards.appendChild(card);
+      });
+
+      // Show the subscription cards section
+      subscriptionCards.style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error fetching subscriptions:', error);
     });
+}
+
 
   </script>
 </body>
