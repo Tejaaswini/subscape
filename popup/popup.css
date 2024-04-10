@@ -236,26 +236,37 @@ ul {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* CSS for verification code form */
 #verification-code-section {
-  margin-top: 20px;
+  width: 300px;
+  padding: 20px;
+  background-color: transparent;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  right: 70px; /* Adjust the distance from the right edge of the container */
+  top: 50%; /* Align the form vertically in the middle */
+  transform: translateY(-50%);
 }
 
 #verification-code-form {
+  /* Optional: Center the form contents horizontally */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 #verification-code {
-  margin-bottom: 10px;
-  padding: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
 #verify-code-btn {
-  padding: 5px 10px;
+  width: 100%;
+  padding: 10px;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -266,6 +277,7 @@ ul {
 #verify-code-btn:hover {
   background-color: #0056b3;
 }
+
 
 
 #user-info {

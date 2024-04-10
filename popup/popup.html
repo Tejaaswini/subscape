@@ -244,7 +244,11 @@
             // For example, show a success message and redirect the user
             console.log('Verification successful');
             // Redirect the user to a new page or perform other actions
+            // hide .bg
+            document.querySelector('.bg').style.display = 'none';
             document.getElementById('verification-code-section').style.display = 'none';
+            document.getElementById('user-info').style.display = 'block';
+            document.getElementById('username-display').textContent = 'Welcome Back,';
             document.getElementById('subscription-list').style.display = 'block';
           } else {
             // Handle verification error
