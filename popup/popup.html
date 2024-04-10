@@ -465,7 +465,6 @@
 
 
 
-    // Handle update subscription form submission
     document.getElementById('update-subscription-btn').addEventListener('click', function (event) {
       event.preventDefault(); // Prevent default form submission
 
@@ -497,6 +496,8 @@
             document.getElementById('update-subscription-form').style.display = 'none';
             // Refresh the subscription cards
             getSubscriptions(loggedInUsername);
+            // Display the subscription list
+            document.getElementById('subscription-list').style.display = 'block';
           } else {
             // If update fails, display an error message
             alert('Failed to update subscription. Please try again later.');
