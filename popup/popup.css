@@ -6,6 +6,7 @@ body {
 
 h2 {
     text-align: center;
+    color: white !important;
 }
 
 h3{
@@ -15,6 +16,16 @@ h3{
 .container{
     margin-top: 0;
     width: 100vw;
+}
+
+.bg {
+  background-image: url('bg.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: flex-end; /* Align content to the right side */
+  align-items: center; /* Center content vertically */
+  height: 98vh; /* Set height to fill the entire viewport */
 }
 
 .cancel-btn, .view-btn, #register-btn, #forgot-password-btn {
@@ -54,16 +65,27 @@ h3{
 }
 
 .login-section, #forgot-password-section, #register-section {
-    margin-top: 20px;
+    /* margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     width: 300px;
-    text-align: center;
-}
+    text-align: center; */
+      width: 300px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      position: absolute;
+      right: 70px; /* Adjust the distance from the right edge of the container */
+      top: 50%; /* Align the form vertically in the middle */
+      transform: translateY(-50%);
+  }
+  
 
 .login-section a {
     text-decoration: none;
-    color: blue;
+    color: rgb(255, 0, 0);
 }
 
 .login-section a:hover {
@@ -74,9 +96,10 @@ h3{
     width: 300px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color:transparent;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: white;
   }
   
   /* Styling for headings */
