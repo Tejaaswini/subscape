@@ -86,7 +86,10 @@
     </ul> -->
 
     <!-- Plus Button to add a new subscription -->
-    <button class="plus-button" id="add-subscription-btn">+</button>
+    <div class="btn-container">
+      <button class="plus-button" id="add-subscription-btn">+</button>
+    </div>
+    
   </div>
   <!-- Form to add a new subscription -->
   <div id="add-subscription-form" class="form-section" style="display: none;">
@@ -302,8 +305,11 @@
             vendorNameElement.textContent = `Vendor Name: ${subscription.vendor_name}`;
             card.appendChild(vendorNameElement);
 
-            const vendorURLElement = document.createElement('p');
+            const vendorURLElement = document.createElement('a');
             vendorURLElement.textContent = `Vendor URL: ${subscription.vendor_url}`;
+            vendorURLElement.href = subscription.vendor_url;  // Set the href attribute
+            vendorURLElement.target = '_blank';  // Open the link in a new tab
+            vendorURLElement.style.textDecoration = 'none';
             card.appendChild(vendorURLElement);
 
             const durationElement = document.createElement('p');
