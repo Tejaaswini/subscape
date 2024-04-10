@@ -9,6 +9,12 @@
 </head>
 
 <body>
+  <!-- Add a div to hold the username and logo -->
+  <div id="user-info" style="display: none;">
+    <p id="username-display"></p>
+    <!-- <img src="subhub_logo.jpg" alt="Subhub Logo" width="100px" class="subhub-logo"> -->
+  </div>
+
   <!-- Login Section -->
   <div id="login-section" class="login-section">
     <h2>Login</h2>
@@ -63,19 +69,19 @@
   <!-- Subscription List -->
   <div id="subscription-list" style="display: none">
     <!-- Netflix Subscription -->
-    <ul>
+    <!-- <ul>
       <li class="subscription">
         <h3>Netflix</h3>
         <button class="view-btn" data-provider="netflix">View</button>
         <button class="cancel-btn" data-provider="netflix">Cancel</button>
-      </li>
+      </li> -->
       <!-- Amazon Prime Subscription -->
-      <li class="subscription">
+      <!-- <li class="subscription">
         <h3>Amazon Prime</h3>
         <button class="view-btn" data-provider="amazon">View</button>
         <button class="cancel-btn" data-provider="amazon">Cancel</button>
       </li>
-    </ul>
+    </ul> -->
 
     <!-- Plus Button to add a new subscription -->
     <button class="plus-button" id="add-subscription-btn">+</button>
@@ -136,8 +142,10 @@
           .then(response => {
             if (response.ok) {
               loggedInUsername = username;
-              // If login is successful, show the subscription list
+              // If login is successful, show the subscription list and display username
               document.getElementById('login-section').style.display = 'none';
+              document.getElementById('user-info').style.display = 'block';
+              document.getElementById('username-display').textContent = 'Welcome Back, ' + username;
               document.getElementById('subscription-list').style.display = 'block';
               // Call getSubscriptions function with the username
               getSubscriptions(username);

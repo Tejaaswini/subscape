@@ -243,3 +243,26 @@ ul {
 #verify-code-btn:hover {
   background-color: #0056b3;
 }
+
+
+#user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+#user-info img {
+  margin-right: 10px; /* Add some margin to the right of the image for spacing */
+}
+
+#username-display {
+  font-weight: bold; /* Make the username text bold */
+}
+
+.subhub-logo{
+  width: 50px;
+  height: 50px;
+  margin-left: 50px;
+}
