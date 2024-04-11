@@ -1,0 +1,49 @@
+{
+    "subscriptions": [
+      {
+        "uuid": "456789",
+        "name": "Netflix",
+        "url": "https://www.netflix.com",
+        "settings_url": "https://www.netflix.com/settings",
+        "plan": "monthly",
+        "start_date": "2024-04-01",
+        "cost": 12.99,
+        "next_payment_date": "2024-05-01",
+        "icon": "https://www.example.com/netflix-icon.png"
+      },
+      {
+        "uuid": "123456",
+        "name": "Amazon Prime",
+        "url": "https://www.amazon.com/prime",
+        "settings_url": "https://www.amazon.com/prime/settings",
+        "plan": "yearly",
+        "start_date": "2024-03-15",
+        "cost": 119.00,
+        "next_payment_date": "2024-05-01",
+        "icon": "https://www.example.com/amazon-prime-icon.png"
+      },
+      {
+        "uuid": "987654",
+        "name": "Spotify",
+        "url": "https://www.spotify.com",
+        "settings_url": "https://www.spotify.com/settings",
+        "plan": "quarterly",
+        "start_date": "2024-04-05",
+        "cost": 29.97,
+        "next_payment_date": "2024-05-01",
+        "icon": "https://www.example.com/spotify-icon.png"
+      },
+      {
+        "uuid": "654321",
+        "name": "Apple Music",
+        "url": "https://www.apple.com/music",
+        "settings_url": "https://www.apple.com/music/settings",
+        "plan": "weekly",
+        "start_date": "2024-04-10",
+        "cost": 4.99,
+        "next_payment_date": "2024-05-01",
+        "icon": "https://www.example.com/apple-music-icon.png"
+      }
+    ]
+  }
+  
