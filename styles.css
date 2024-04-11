@@ -52,8 +52,6 @@ body {
     --card-border-color: #555; /* Dark border color in dark mode */
 }
 
-
-
 .subscription-details-container {
     display: flex;
     flex-direction: row;
@@ -70,14 +68,15 @@ body {
 
 
 .next-payment-label {
-    font-size: 14px;
+    font-size: 15px;
+    color: rgb(177, 177, 177);
 }
 
 .subscription-plan {
     margin-left: auto; /* Center the plan relative to the name */
     margin-right: 20px; /* Adjusted margin */
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 15px;
+    color: rgb(177, 177, 177)
 }
 
 .subscription-icon {
@@ -89,7 +88,8 @@ body {
 .subscription-name {
     margin-right: auto; /* Adjusted margin */
     font-weight: bold;
-    font-size: 22px;
+    font-size: 18px;
+    margin-top: 5px;
 }
 
 .subscription-cost,
