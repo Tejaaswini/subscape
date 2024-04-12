@@ -7,11 +7,30 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
+  <div class="landing-container">
+    <!-- Dark/Light Mode Toggle -->
     <div class="toggle-container">
       <input type="checkbox" id="mode-toggle" class="toggle">
       <label for="mode-toggle" class="slider"></label>
     </div>
+
+    <header class="landing-header">
+      <img src="logo.png" alt="SubHub Logo" class="logo">
+      <div class="login-options">
+        <button id="login-btn">Login</button>
+      </div>
+    </header>
+    <div id="login-form" class="login-form hidden">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="main-container hidden">
     <h2 style="margin-top: 50px;">Manage subscriptions</h2>
     <div id="subscriptions" class="subscription-container"></div>
   </div>
