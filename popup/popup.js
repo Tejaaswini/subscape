@@ -180,41 +180,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const card = generateSubscriptionCard(subscription);
     subscriptionsContainer.appendChild(card);
   });
-
-  const darkModeToggle = document.getElementById("mode-toggle");
-  const body = document.body;
-
-  darkModeToggle.addEventListener("change", () => {
-    body.classList.toggle("light-mode");
-    const settingsBtns = document.querySelectorAll(".settings-btn");
-    settingsBtns.forEach((btn) => {
-      btn.classList.toggle("light-mode");
-    });
-  });
-
-  const landingContainer = document.querySelector(".landing-container");
-  const loginBtn = document.getElementById("login-btn");
-  const loginForm = document.getElementById("login-form");
-  const mainContainer = document.querySelector(".main-container");
-
-  // Hide landing container and show login form when login button is clicked
-  loginBtn.addEventListener("click", function () {
-    landingContainer.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-  });
-
-  // Handle form submission
-  loginForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    // Perform login authentication here
-
-    // Assuming authentication is successful
-    // Hide login form and landing container, and show manage subscription page
-    loginForm.classList.add("hidden");
-    landingContainer.classList.add("hidden");
-    mainContainer.classList.add("show");
-    // Hide other elements
-  document.body.classList.add("manage-subscriptions-active");
-  });
 });
 
+const darkModeToggle = document.getElementById("mode-toggle");
+const body = document.body;
+
+darkModeToggle.addEventListener("change", () => {
+  body.classList.toggle("light-mode");
+  const settingsBtns = document.querySelectorAll(".settings-btn");
+  settingsBtns.forEach((btn) => {
+    btn.classList.toggle("light-mode");
+  });
+});

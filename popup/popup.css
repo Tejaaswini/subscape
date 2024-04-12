@@ -1,22 +1,14 @@
-/* CSS Variables */
-:root {
-  --dark-bg-color: #2c2c2c; /* Darker background color */
-  --light-bg-color: #fff; /* Light background color */
-  --card-bg-color: #333; /* Darker card background color */
-  --card-border-color: #555; /* Darker card border color */
-}
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: var(--dark-bg-color); /* Use CSS variable for background color */
+  background-color: #2c2c2c; /* Darker background color */
   color: #fff; /* Light text color */
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .light-mode {
-  background-color: var(--light-bg-color); /* Use CSS variable for background color */
+  background-color: #fff; /* Light background color */
   color: #333; /* Dark text color */
 }
 
@@ -37,7 +29,7 @@ body {
 .card {
   border: 1px solid var(--card-border-color); /* Use CSS variable for border color */
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Darker box shadow */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4); /* Darker box shadow */
   padding: 20px;
   margin-bottom: 20px;
   width: 50vw;
@@ -54,6 +46,11 @@ body {
   --card-border-color: #ccc; /* Light border color in light mode */
 }
 
+.dark-mode .card {
+  --card-bg-color: rgb(58, 58, 58) !; /* Dark background color in dark mode */
+  --card-border-color: #555; /* Dark border color in dark mode */
+}
+
 .subscription-details-container {
   display: flex;
   flex-direction: row;
@@ -68,6 +65,7 @@ body {
   align-items: flex-end; /* Align date container to the right */
 }
 
+
 .next-payment-label {
   font-size: 15px;
   color: rgb(177, 177, 177);
@@ -77,7 +75,7 @@ body {
   margin-left: auto; /* Center the plan relative to the name */
   margin-right: 20px; /* Adjusted margin */
   font-size: 15px;
-  color: rgb(177, 177, 177);
+  color: rgb(177, 177, 177)
 }
 
 .subscription-icon {
@@ -131,6 +129,7 @@ body {
   align-items: flex-start; /* Align items to the start of the column */
   width: 100px; /* Adjust width as needed */
 }
+
 
 .settings-dropdown a {
   text-decoration: none;
@@ -209,15 +208,15 @@ body {
   color: #333; /* Dark text color in light mode */
 }
 
-.light-mode .settings-dropdown {
+.light-mode .settings-dropdown{
   background-color: #e9e9e9; /* Lighter background color in light mode */
   border: 1px solid #ccc; /* Lighter border color in light mode */
+
 }
 
 .light-mode .settings-dropdown a:hover {
   background-color: #ccc; /* Lighter hover background color in light mode */
 }
-
 .past-payments-list {
   display: none; /* Hide the past payments list by default */
   color: #8b8b8b; /* Light text color */
@@ -239,89 +238,64 @@ body {
   color: #fff; /* Light text color */
 }
 
-.light-mode .past-payments-list h3 {
+.light-mode .past-payments-list h3{
   color: #333; /* Dark text color in light mode */
 }
 
-.hidden {
-  display: none;
-}
 
-/* Landing page styles */
-.landing-container {
-  background-color: var(--dark-bg-color); /* Darker background color */
-  color: #fff; /* Light text color */
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.landing-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
-.login-options {
-  margin-left: auto;
-}
-
-#login-btn {
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.login-form {
+header {
+  color: white;
+  padding: 20px;
   text-align: center;
 }
 
-.login-form h2 {
-  margin-bottom: 20px;
+.landing-page-body{
+  background-image: url('lp-dark.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.login-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.landing-page-body.light-mode{
+  background-image: url('lp-light.png');
 }
 
-.login-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff; /* Blue color */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Manage subscriptions page styles */
-.main-container {
-  display: none; /* Hide manage subscriptions page by default */
-  flex-direction: column;
+.login-button-container {
+  display: flex;
+  justify-content: center;
   align-items: center;
+  margin-top: -12vh !important;
   height: 100vh;
 }
 
-.main-container.show {
-  display: flex; /* Show manage subscriptions page when the show class is present */
+.login-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  width: 15vw;
+  background-image: linear-gradient(to right, #304031, #4CAF50); /* Green gradient moving from left to right */
+  background-size: 200% auto;
+  animation: slide 2s infinite alternate;
 }
 
-/* Add this to hide other elements when manage subscriptions is active */
-.manage-subscriptions-active .landing-container,
-.manage-subscriptions-active .login-form {
-  display: none;
+@keyframes slide {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
+}
+
+.login-button:hover {
+  box-shadow: #555 0 0 10px;
 }
