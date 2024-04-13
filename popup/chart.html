@@ -1,0 +1,53 @@
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<link rel="stylesheet" href="popup.css">
+<body>
+    <header>
+        <div class="toggle-container">
+            <input type="checkbox" id="mode-toggle" class="toggle">
+            <label for="mode-toggle" class="slider"></label>
+        </div>
+    </header>
+
+<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+
+<script>
+var xValues = ["OTT", "music", "gaming", "USA", "delivery", "fitness", "finance", "magazine", "education", "software", "fashion", "other"];
+var yValues = [55, 49, 44, 24, 15, 14, 13, 12, 11, 10, 9, 56];
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145",
+  "#f0a500",
+  "#f472d0",
+  "#f47214",
+  "#f472o4",
+  "#2262d4",
+  "#b474d4",
+  "#b47214"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Breakdown of Subscriptions by Category"
+    }
+  }
+});
+</script>
+
+<script src="popup.js"></script>
+
+</body>
+</html>

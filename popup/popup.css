@@ -363,3 +363,54 @@ button[type="submit"]:hover {
   margin-bottom: 15px;
   cursor: pointer;
 }
+
+.reg-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.register-container {
+  width: 30vw; /* Set the width of the container */
+  margin-top: 5%; /* Adjusted margin-top */
+  padding: 20px; /* Added padding */
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center form items horizontally */
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"],
+.register-form button[type="submit"] {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  width: calc(100% - 22px); /* Adjusted width to account for padding and border */
+}
+
+.register-form button[type="submit"] {
+  margin-top: 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.register-form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+#myChart {
+  margin: 20vh 25vw;
+}
