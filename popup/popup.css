@@ -161,13 +161,17 @@ body {
 }
 
 .slider {
-  position: relative;
+  position: absolute; /* Position absolute to place it anywhere within the parent container */
+  top: 5%; /* Adjust top position if needed */
+  transform: translateY(-50%); /* Center vertically */
   width: 60px;
   height: 34px;
   background-color: #ccc;
   border-radius: 34px;
   cursor: pointer;
+  right: 5%; /* Place it on the rightmost side */
 }
+
 
 .slider:before {
   position: absolute;
@@ -190,7 +194,7 @@ body {
   content: '';
   width: 24px;
   height: 24px;
-  background-image: url('moon.svg'); /* Dark mode icon */
+  background-image: url('https://static.vecteezy.com/system/resources/previews/009/390/991/original/bright-sun-illustration-free-png.png');
   background-size: cover;
   background-repeat: no-repeat;
   top: 5px;
@@ -199,7 +203,7 @@ body {
 }
 
 .toggle:checked + .slider:after {
-  background-image: url('sun.svg'); /* Light mode icon */
+  background-image: url('https://pngfre.com/wp-content/uploads/moon-40-300x277.png'); /* Light mode icon */
   transform: translateX(30px);
 }
 
