@@ -192,3 +192,84 @@ darkModeToggle.addEventListener("change", () => {
     btn.classList.toggle("light-mode");
   });
 });
+
+//-------------------------------------------------------------
+// Login form
+//-------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", function() {
+  const loginButton = document.querySelector('.login-button');
+  const popupContainer = document.createElement('div');
+  popupContainer.classList.add('popup-container');
+
+  const loginForm = document.createElement('form');
+  loginForm.classList.add('login-form');
+
+  const usernameInput = document.createElement('input');
+  usernameInput.setAttribute('type', 'text');
+  usernameInput.setAttribute('placeholder', 'Username');
+
+  const passwordInput = document.createElement('input');
+  passwordInput.setAttribute('type', 'password');
+  passwordInput.setAttribute('placeholder', 'Password');
+
+  const newHere = document.createElement('a');
+  newHere.classList.add('new-here');
+  newHere.textContent = 'New here? Register';
+  newHere.setAttribute('href', '#');
+
+  const forgotPassword = document.createElement('a');
+  forgotPassword.classList.add('forgot-password');
+  forgotPassword.textContent = 'Forgot password?';
+  forgotPassword.setAttribute('href', '#');
+
+  const submitButton = document.createElement('button');
+  submitButton.setAttribute('type', 'submit');
+  submitButton.textContent = 'Login';
+
+  loginForm.appendChild(usernameInput);
+  loginForm.appendChild(passwordInput);
+  loginForm.appendChild(newHere);
+  loginForm.appendChild(forgotPassword);
+  loginForm.appendChild(submitButton);
+
+  popupContainer.appendChild(loginForm);
+
+  function togglePopup() {
+    popupContainer.classList.toggle('active');
+  }
+
+  loginButton.addEventListener('click', togglePopup);
+
+  // Close popup when clicking outside of it
+  document.addEventListener('click', function(event) {
+    const isClickInsidePopup = popupContainer.contains(event.target);
+    const isClickOnLoginButton = loginButton.contains(event.target);
+    if (!isClickInsidePopup && !isClickOnLoginButton) {
+      popupContainer.classList.remove('active');
+    }
+  });
+
+  document.body.appendChild(popupContainer);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const loginTab = document.getElementById("login-tab");
+  const registerTab = document.getElementById("register-tab");
+  const loginForm = document.querySelector(".login-form");
+  const registerForm = document.querySelector(".register-form");
+
+  loginTab.addEventListener("click", function () {
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+    loginForm.classList.add("active");
+    registerForm.classList.remove("active");
+  });
+
+  registerTab.addEventListener("click", function () {
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+    registerForm.classList.add("active");
+    loginForm.classList.remove("active");
+  });
+});
