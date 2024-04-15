@@ -162,11 +162,11 @@ body {
 
 .slider {
   position: absolute; /* Position absolute to place it anywhere within the parent container */
-  top: 5%; /* Adjust top position if needed */
+  top: 4%; /* Adjust top position if needed */
   transform: translateY(-50%); /* Center vertically */
   width: 60px;
   height: 34px;
-  background-color: #ccc;
+  background-color: transparent;
   border-radius: 34px;
   cursor: pointer;
   right: 5%; /* Place it on the rightmost side */
@@ -473,4 +473,17 @@ button[type="submit"]:hover {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #323232; /* Dark background color */
+}
+
+.light-mode .header {
+  background-color: #f1f1f1; /* Light background color in light mode */
+  color: #333; /* Dark text color in light mode */
 }
