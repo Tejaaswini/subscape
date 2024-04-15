@@ -572,3 +572,11 @@ button[type="submit"]:hover {
 .center-text {
   text-align: center;
 }
+
+.header-logo{
+  cursor: pointer;
+}
+
+.light-mode .header-logo{
+  background-image: url('logo-light.png'); /* Light mode logo */
+}

@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
   // Check if there are subscriptions to display
   if (subscriptionsData.subscriptions.length === 0) {
-    noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscription cards to show"; // Display the shrug emoji
+    noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscriptions to show"; // Display the shrug emoji
     subscriptionsHeading.style.display = "none"; // Hide the heading
   } else {
     // Generate subscription cards if there are subscriptions
