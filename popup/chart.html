@@ -12,8 +12,8 @@
 <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
 
 <script>
-var xValues = ["OTT", "music", "gaming", "USA", "delivery", "fitness", "finance", "magazine", "education", "software", "fashion", "other"];
-var yValues = [55, 49, 44, 24, 15, 14, 13, 12, 11, 10, 9, 56];
+var xValues = ["OTT", "music", "gaming", "delivery", "fitness", "finance", "magazine", "education", "software", "fashion", "other"];
+var yValues = [55, 49, 44, 15, 14, 13, 12, 11, 10, 9, 56];
 var barColors = [
   "#b91d47",
   "#00aba9",
@@ -41,7 +41,20 @@ new Chart("myChart", {
   options: {
     title: {
       display: true,
-      text: "Breakdown of Subscriptions by Category"
+      text: "Breakdown of Subscriptions by Category",
+      className: 'chart-title',
+      fontColor: '#4CAF50',
+      fontSize: 30,
+      padding: 20,
+      lineHeight: 1.5
+    },
+    legend: {
+      display: true,
+      position: 'right',
+      labels: {
+        fontColor: '#4CAF50',
+        fontSize: 14
+      }
     }
   }
 });

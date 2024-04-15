@@ -416,7 +416,7 @@ button[type="submit"]:hover {
 
 
 #myChart {
-  margin: 20vh 25vw;
+  margin: 0 25vw;
 }
 
 .multi-select-container{

@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
       dropdown.innerHTML = `
                 <a href="update.html"><img src="update.png" alt="Update" />Update</a>
                 <a href="${subscription.settings_url}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
-                <a href="#"><img src="delete.png" alt="Delete" />Delete</a>
+                <a href="#" onclick="confirmDelete()"><img src="delete.png" alt="Delete" />Delete</a>
             `;
 
       const cardRect = card.getBoundingClientRect();
@@ -261,3 +261,11 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = 'registration.html';
   });
 });
+
+function confirmDelete() {
+  if (confirm("Are you sure you want to delete the subscription?")) {
+      // User clicked OK, add code here to delete the subscription.
+  } else {
+      // User clicked Cancel, do nothing.
+  }
+}
