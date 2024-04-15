@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const dropdown = document.createElement("div");
       dropdown.classList.add("settings-dropdown");
       dropdown.innerHTML = `
-                <a href="#"><img src="update.png" alt="Update" />Update</a>
+                <a href="update.html"><img src="update.png" alt="Update" />Update</a>
                 <a href="${subscription.settings_url}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
                 <a href="#"><img src="delete.png" alt="Delete" />Delete</a>
             `;

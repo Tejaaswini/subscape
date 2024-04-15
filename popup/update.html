@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update subscription</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="popup.html">subhub</a>
+        <div class="toggle-container">
+            <input type="checkbox" id="mode-toggle" class="toggle">
+            <label for="mode-toggle" class="slider"></label>
+        </div>
+    </header>
+    <!-- update subscription -->
+    <div class="container">
+        <h2 style="margin-top: 50px;">Update subscription</h2>
+        <form id="update-form" class="update-form">
+            <input type="text" id="update-name" class="update-name" placeholder="Update Name">
+            <input type="text" id="update-url" class="update-url" placeholder="Update URL">
+            <input type="text" id="update-amount" class="update-amount" placeholder="Update Amount">
+            <input type="date" id="update-date" class="update-date" placeholder="Update Date">
+            <button id="update" class="update-btn">Update</button>
+        </form>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
