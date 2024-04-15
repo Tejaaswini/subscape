@@ -564,3 +564,11 @@ button[type="submit"]:hover {
   width: 25vw;
   height: 5vh;
 }
+
+#no-cards {
+  margin-top: 20vh !important;
+}
+
+.center-text {
+  text-align: center;
+}

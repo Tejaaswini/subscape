@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const subscriptionsContainer = document.getElementById("subscriptions");
+  const noCardsContainer = document.getElementById("no-cards");
+  const subscriptionsHeading = document.getElementById("subscriptions-heading");
 
+  // const subscriptionsData = {
+  //   subscriptions: []
+  // };
   // Mock JSON data
   const subscriptionsData = {
     subscriptions: [
@@ -149,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const pastPaymentsList = document.createElement("ul");
     pastPaymentsList.classList.add("past-payments-list");
 
-
     const title = document.createElement("h3");
     title.textContent = "Payment History";
     pastPaymentsList.appendChild(title);
@@ -177,11 +181,22 @@ document.addEventListener("DOMContentLoaded", function () {
     return card;
   }
 
-  subscriptionsData.subscriptions.forEach((subscription) => {
-    const card = generateSubscriptionCard(subscription);
-    subscriptionsContainer.appendChild(card);
-  });
-});
+  // subscriptionsData.subscriptions.forEach((subscription) => {
+  //   const card = generateSubscriptionCard(subscription);
+  //   subscriptionsContainer.appendChild(card);
+  // });
+  // Check if there are subscriptions to display
+  if (subscriptionsData.subscriptions.length === 0) {
+    noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscription cards to show"; // Display the shrug emoji
+    subscriptionsHeading.style.display = "none"; // Hide the heading
+  } else {
+    // Generate subscription cards if there are subscriptions
+    subscriptionsData.subscriptions.forEach((subscription) => {
+      const card = generateSubscriptionCard(subscription);
+      subscriptionsContainer.appendChild(card);
+    });
+  }
+});;
 
 const darkModeToggle = document.getElementById("mode-toggle");
 const body = document.body;
@@ -198,35 +213,35 @@ darkModeToggle.addEventListener("change", () => {
 // Login form
 //-------------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", function() {
-  const loginButton = document.querySelector('.login-button');
-  const popupContainer = document.createElement('div');
-  popupContainer.classList.add('popup-container');
+document.addEventListener("DOMContentLoaded", function () {
+  const loginButton = document.querySelector(".login-button");
+  const popupContainer = document.createElement("div");
+  popupContainer.classList.add("popup-container");
 
-  const loginForm = document.createElement('form');
-  loginForm.classList.add('login-form');
+  const loginForm = document.createElement("form");
+  loginForm.classList.add("login-form");
 
-  const usernameInput = document.createElement('input');
-  usernameInput.setAttribute('type', 'text');
-  usernameInput.setAttribute('placeholder', 'Username');
+  const usernameInput = document.createElement("input");
+  usernameInput.setAttribute("type", "text");
+  usernameInput.setAttribute("placeholder", "Username");
 
-  const passwordInput = document.createElement('input');
-  passwordInput.setAttribute('type', 'password');
-  passwordInput.setAttribute('placeholder', 'Password');
+  const passwordInput = document.createElement("input");
+  passwordInput.setAttribute("type", "password");
+  passwordInput.setAttribute("placeholder", "Password");
 
-  const newHere = document.createElement('a');
-  newHere.classList.add('new-here');
-  newHere.textContent = 'New here? Register';
-  newHere.setAttribute('href', './registration.html');
+  const newHere = document.createElement("a");
+  newHere.classList.add("new-here");
+  newHere.textContent = "New here? Register";
+  newHere.setAttribute("href", "./registration.html");
 
-  const forgotPassword = document.createElement('a');
-  forgotPassword.classList.add('forgot-password');
-  forgotPassword.textContent = 'Forgot password?';
-  forgotPassword.setAttribute('href', './forgot-password.html');
+  const forgotPassword = document.createElement("a");
+  forgotPassword.classList.add("forgot-password");
+  forgotPassword.textContent = "Forgot password?";
+  forgotPassword.setAttribute("href", "./forgot-password.html");
 
-  const submitButton = document.createElement('button');
-  submitButton.setAttribute('type', 'submit');
-  submitButton.textContent = 'Login';
+  const submitButton = document.createElement("button");
+  submitButton.setAttribute("type", "submit");
+  submitButton.textContent = "Login";
 
   loginForm.appendChild(usernameInput);
   loginForm.appendChild(passwordInput);
@@ -237,17 +252,17 @@ document.addEventListener("DOMContentLoaded", function() {
   popupContainer.appendChild(loginForm);
 
   function togglePopup() {
-    popupContainer.classList.toggle('active');
+    popupContainer.classList.toggle("active");
   }
 
-  loginButton.addEventListener('click', togglePopup);
+  loginButton.addEventListener("click", togglePopup);
 
   // Close popup when clicking outside of it
-  document.addEventListener('click', function(event) {
+  document.addEventListener("click", function (event) {
     const isClickInsidePopup = popupContainer.contains(event.target);
     const isClickOnLoginButton = loginButton.contains(event.target);
     if (!isClickInsidePopup && !isClickOnLoginButton) {
-      popupContainer.classList.remove('active');
+      popupContainer.classList.remove("active");
     }
   });
 
@@ -255,17 +270,17 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const loginButton = document.querySelector('.new-here');
+  const loginButton = document.querySelector(".new-here");
 
-  loginButton.addEventListener('click', function () {
-    window.location.href = 'registration.html';
+  loginButton.addEventListener("click", function () {
+    window.location.href = "registration.html";
   });
 });
 
 function confirmDelete() {
   if (confirm("Are you sure you want to delete the subscription?")) {
-      // User clicked OK, add code here to delete the subscription.
+    // User clicked OK, add code here to delete the subscription.
   } else {
-      // User clicked Cancel, do nothing.
+    // User clicked Cancel, do nothing.
   }
 }
