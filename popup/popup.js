@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const dropdown = document.createElement("div");
       dropdown.classList.add("settings-dropdown");
       dropdown.innerHTML = `
+                <a href="#"><img src="update.png" alt="Update" />Update</a>
                 <a href="${subscription.settings_url}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
                 <a href="#"><img src="delete.png" alt="Delete" />Delete</a>
             `;
@@ -152,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const title = document.createElement("h3");
     title.textContent = "Payment History";
     pastPaymentsList.appendChild(title);
-    
+
     // Iterate over past payments and create list items for each payment
     subscription.past_payments.forEach((payment) => {
       const paymentItem = document.createElement("li");
