@@ -525,3 +525,12 @@ button[type="submit"]:hover {
   color: #3cbc00;
   cursor: pointer;
 }
+
+.header a {
+  text-decoration: none;
+  color: white;
+}
+
+.light-mode .header a {
+  color: #333; /* Dark text color in light mode */
+}
