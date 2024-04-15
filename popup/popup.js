@@ -216,12 +216,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const newHere = document.createElement('a');
   newHere.classList.add('new-here');
   newHere.textContent = 'New here? Register';
-  newHere.setAttribute('href', '#');
+  newHere.setAttribute('href', './registration.html');
 
   const forgotPassword = document.createElement('a');
   forgotPassword.classList.add('forgot-password');
   forgotPassword.textContent = 'Forgot password?';
-  forgotPassword.setAttribute('href', '#');
+  forgotPassword.setAttribute('href', './forgot-password.html');
 
   const submitButton = document.createElement('button');
   submitButton.setAttribute('type', 'submit');
