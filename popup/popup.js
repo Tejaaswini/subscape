@@ -1,202 +1,190 @@
+//-------------------------------------------------------------
+// Manage subscriptions page
+//-------------------------------------------------------------
+
 document.addEventListener("DOMContentLoaded", function () {
   const subscriptionsContainer = document.getElementById("subscriptions");
   const noCardsContainer = document.getElementById("no-cards");
   const subscriptionsHeading = document.getElementById("subscriptions-heading");
 
-  // const subscriptionsData = {
-  //   subscriptions: []
-  // };
-  // Mock JSON data
-  const subscriptionsData = {
-    subscriptions: [
-      {
-        uuid: "456789",
-        name: "Netflix",
-        url: "https://www.netflix.com",
-        settings_url: "https://www.netflix.com/settings",
-        plan: "monthly",
-        start_date: "2024-04-01",
-        cost: 12.99,
-        icon: "https://static-00.iconduck.com/assets.00/netflix-icon-icon-2048x2048-yj41gpvr.png",
-        next_payment_date: "24 April 2024",
-        past_payments: [
-          { date: "24 March 2024", amount: 12.99 },
-          { date: "24 February 2024", amount: 12.99 },
-        ],
-      },
-      {
-        uuid: "123456",
-        name: "Prime",
-        url: "https://www.amazon.com/prime",
-        settings_url: "https://www.amazon.com/prime/settings",
-        plan: "annual",
-        start_date: "2024-03-15",
-        cost: 119.99,
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Amazon_Prime_Video_blue_logo_1.svg/2048px-Amazon_Prime_Video_blue_logo_1.svg.png",
-        next_payment_date: "15 March 2025",
-        past_payments: [
-          { date: "24 March 2024", amount: 12.99 },
-          { date: "24 February 2024", amount: 12.99 },
-        ],
-      },
-      {
-        uuid: "987654",
-        name: "Hulu",
-        url: "https://www.hulu.com",
-        settings_url: "https://www.hulu.com/settings",
-        plan: "monthly",
-        start_date: "2024-02-20",
-        cost: 5.99,
-        icon: "https://d12jofbmgge65s.cloudfront.net/wp-content/uploads/2023/02/tech-guide_header-image-hulu.webp",
-        next_payment_date: "20 February 2024",
-        past_payments: [
-          { date: "24 March 2024", amount: 12.99 },
-          { date: "24 February 2024", amount: 12.99 },
-        ],
-      },
-      {
-        uuid: "654321",
-        name: "F1 TV",
-        url: "https://www.formula1.com/en/subscribe-to-f1.html",
-        settings_url: "https://www.formula1.com/en/account",
-        plan: "annual",
-        start_date: "2024-01-10",
-        cost: 79.99,
-        icon: "https://mir-s3-cdn-cf.behance.net/projects/404/7aab22159615505.Y3JvcCwyMDIwLDE1ODAsMCww.png",
-        next_payment_date: "10 January 2025",
-        past_payments: [
-          { date: "24 March 2024", amount: 12.99 },
-          { date: "24 February 2024", amount: 12.99 },
-        ],
-      },
-    ],
-  };
+  const username = sessionStorage.getItem("username");
+  if (!username) {
+    console.error("Username not found in sessionStorage.");
+    alert("Username not found.");
+    return;
+  }
+  
+  // API call to get subscriptions data
+  fetch(`https://7se83qeyid.execute-api.us-east-1.amazonaws.com/dev/v2/subscriptions?username=${username}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data); // Verify that the data is retrieved correctly
+      // Check if subscriptions data exists and is an array
+      if (!data || data.length === 0) {
+        noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscriptions to show"; // Display the shrug emoji
+        subscriptionsHeading.style.display = "none"; // Hide the heading
+      } else {
+        // Iterate over each subscription object and create subscription cards
+        data.forEach((subscription) => {
+          console.log("subzzzzz",subscription); // Verify that the subscription data is correct
+          const name = subscription.name;
+          const url = subscription.url;
+          const settingsUrl = subscription.settings_url;
+          const plan = subscription.plan;
+          const startDate = subscription.start_date;
+          const cost = subscription.cost;
+          const icon = subscription.icon;
+          const lastPaymentDate = subscription.last_payment_date;
+          const category = subscription.category;
 
-  function generateSubscriptionCard(subscription) {
-    const card = document.createElement("div");
-    card.classList.add("card");
+          // Now you can use these variables to create your subscription card or perform other operations
+          console.log("Name:", name);
+          console.log("URL:", url);
+          console.log("Settings URL:", settingsUrl);
+          console.log("Plan:", plan);
+          console.log("Start Date:", startDate);
+          console.log("Cost:", cost);
+          console.log("Icon:", icon);
+          console.log("Last Payment Date:", lastPaymentDate);
+          console.log("Category:", category);
 
-    const icon = document.createElement("img");
-    icon.classList.add("subscription-icon");
-    icon.src = subscription.icon;
+          // Create subscription card using these variables
+          const subscriptionCard = generateSubscriptionCard({
+            name: name,
+            url: url,
+            settingsUrl: settingsUrl,
+            plan: plan,
+            start_date: startDate,
+            cost: cost,
+            icon: icon,
+            last_payment_date: lastPaymentDate,
+            category: category
+          });
 
-    const detailsContainer = document.createElement("div");
-    detailsContainer.classList.add("subscription-details-container");
+          // Append subscription card to container
+          subscriptionsContainer.appendChild(subscriptionCard);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("There was a problem fetching subscription data:", error);
+    });
+});
 
-    const nameAndPlanContainer = document.createElement("div");
-    nameAndPlanContainer.classList.add("name-and-plan-container");
 
-    const name = document.createElement("div");
-    name.classList.add("subscription-name");
-    name.textContent = subscription.name;
+function generateSubscriptionCard(subscription) {
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-    const plan = document.createElement("div");
-    plan.classList.add("subscription-plan");
-    plan.textContent = `${subscription.plan}`;
+  const icon = document.createElement("img");
+  icon.classList.add("subscription-icon");
+  icon.src = subscription.icon;
 
-    nameAndPlanContainer.appendChild(name);
-    nameAndPlanContainer.appendChild(plan);
+  const detailsContainer = document.createElement("div");
+  detailsContainer.classList.add("subscription-details-container");
 
-    const cost = document.createElement("div");
-    cost.classList.add("subscription-cost");
-    cost.textContent = `$${subscription.cost}`;
+  const nameAndPlanContainer = document.createElement("div");
+  nameAndPlanContainer.classList.add("name-and-plan-container");
 
-    const nextPaymentDate = document.createElement("div");
-    nextPaymentDate.classList.add("subscription-next-payment-date");
-    nextPaymentDate.textContent = `${subscription.next_payment_date}`;
+  const name = document.createElement("div");
+  name.classList.add("subscription-name");
+  name.textContent = subscription.name;
 
-    const nextPaymentLabel = document.createElement("div");
-    nextPaymentLabel.classList.add("next-payment-label");
-    nextPaymentLabel.textContent = "Next Payment";
+  const plan = document.createElement("div");
+  plan.classList.add("subscription-plan");
+  plan.textContent = `${subscription.plan}`;
 
-    const settingsBtn = document.createElement("button");
-    settingsBtn.classList.add("settings-btn");
-    settingsBtn.textContent = "";
-    settingsBtn.addEventListener("click", function (event) {
-      document.querySelectorAll(".settings-dropdown").forEach((dropdown) => {
-        dropdown.remove();
-      });
+  nameAndPlanContainer.appendChild(name);
+  nameAndPlanContainer.appendChild(plan);
 
-      const dropdown = document.createElement("div");
-      dropdown.classList.add("settings-dropdown");
-      dropdown.innerHTML = `
+  const cost = document.createElement("div");
+  cost.classList.add("subscription-cost");
+  cost.textContent = `$${subscription.cost}`;
+
+  const nextPaymentDate = document.createElement("div");
+  nextPaymentDate.classList.add("subscription-next-payment-date");
+  nextPaymentDate.textContent = `${subscription.last_payment_date}`;
+
+  const nextPaymentLabel = document.createElement("div");
+  nextPaymentLabel.classList.add("next-payment-label");
+  nextPaymentLabel.textContent = "Last Payment Date";
+
+  const settingsBtn = document.createElement("button");
+  settingsBtn.classList.add("settings-btn");
+  settingsBtn.textContent = "";
+  settingsBtn.addEventListener("click", function (event) {
+    document.querySelectorAll(".settings-dropdown").forEach((dropdown) => {
+      dropdown.remove();
+    });
+
+    const dropdown = document.createElement("div");
+    dropdown.classList.add("settings-dropdown");
+    dropdown.innerHTML = `
                 <a href="update.html"><img src="update.png" alt="Update" />Update</a>
-                <a href="${subscription.settings_url}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
+                <a href="${subscription.settingsUrl}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
                 <a href="#" onclick="confirmDelete()"><img src="delete.png" alt="Delete" />Delete</a>
             `;
 
-      const cardRect = card.getBoundingClientRect();
-      dropdown.style.top = `${cardRect.bottom - 30}px`;
-      document.body.appendChild(dropdown);
+    const cardRect = card.getBoundingClientRect();
+    dropdown.style.top = `${cardRect.bottom - 30}px`;
+    document.body.appendChild(dropdown);
 
-      document.addEventListener("click", function (e) {
-        if (!dropdown.contains(e.target) && !settingsBtn.contains(e.target)) {
-          dropdown.remove();
-        }
-      });
-
-      event.stopPropagation();
+    document.addEventListener("click", function (e) {
+      if (!dropdown.contains(e.target) && !settingsBtn.contains(e.target)) {
+        dropdown.remove();
+      }
     });
 
-    detailsContainer.appendChild(icon);
-    detailsContainer.appendChild(nameAndPlanContainer);
-    detailsContainer.appendChild(cost);
-    const dateContainer = document.createElement("div");
-    dateContainer.classList.add("subscription-date-container");
-    dateContainer.appendChild(nextPaymentDate);
-    dateContainer.appendChild(nextPaymentLabel);
-    detailsContainer.appendChild(dateContainer);
-    detailsContainer.appendChild(settingsBtn);
+    event.stopPropagation();
+  });
 
-    const pastPaymentsContainer = document.createElement("div");
-    pastPaymentsContainer.classList.add("past-payments-container");
+  detailsContainer.appendChild(icon);
+  detailsContainer.appendChild(nameAndPlanContainer);
+  detailsContainer.appendChild(cost);
+  const dateContainer = document.createElement("div");
+  dateContainer.classList.add("subscription-date-container");
+  dateContainer.appendChild(nextPaymentDate);
+  dateContainer.appendChild(nextPaymentLabel);
+  detailsContainer.appendChild(dateContainer);
+  detailsContainer.appendChild(settingsBtn);
 
-    const pastPaymentsList = document.createElement("ul");
-    pastPaymentsList.classList.add("past-payments-list");
+  const pastPaymentsContainer = document.createElement("div");
+  pastPaymentsContainer.classList.add("past-payments-container");
 
-    const title = document.createElement("h3");
-    title.textContent = "Payment History";
-    pastPaymentsList.appendChild(title);
+  const pastPaymentsList = document.createElement("ul");
+  pastPaymentsList.classList.add("past-payments-list");
 
-    // Iterate over past payments and create list items for each payment
-    subscription.past_payments.forEach((payment) => {
-      const paymentItem = document.createElement("li");
-      paymentItem.textContent = `Amount: $${payment.amount} was paid on ${payment.date}`;
-      pastPaymentsList.appendChild(paymentItem);
-    });
-    pastPaymentsContainer.appendChild(pastPaymentsList);
+  const title = document.createElement("h3");
+  title.textContent = "Payment History";
+  pastPaymentsList.appendChild(title);
 
-    card.appendChild(detailsContainer);
-    card.appendChild(pastPaymentsContainer);
+  const pastPayment = document.createElement("li");
+  pastPayment.classList.add("past-payment");
+  pastPayment.textContent = subscription.last_payment_date; // Set the text content to the last payment date
+  pastPaymentsList.appendChild(pastPayment); // Append the list item to the pastPaymentsList
+  pastPaymentsContainer.appendChild(pastPaymentsList); // Append the list to the pastPaymentsContainer
+  
 
-    // Toggle function for past payments accordion
-    function togglePastPayments() {
-      const pastPaymentsList = card.querySelector(".past-payments-list");
-      pastPaymentsList.classList.toggle("show");
-    }
+  card.appendChild(detailsContainer);
+  card.appendChild(pastPaymentsContainer);
 
-    // Add click event listener to card for toggling past payments
-    card.addEventListener("click", togglePastPayments);
-
-    return card;
+  // Toggle function for past payments accordion
+  function togglePastPayments() {
+    const pastPaymentsList = card.querySelector(".past-payments-list");
+    pastPaymentsList.classList.toggle("show");
   }
 
-  // subscriptionsData.subscriptions.forEach((subscription) => {
-  //   const card = generateSubscriptionCard(subscription);
-  //   subscriptionsContainer.appendChild(card);
-  // });
-  // Check if there are subscriptions to display
-  if (subscriptionsData.subscriptions.length === 0) {
-    noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscriptions to show"; // Display the shrug emoji
-    subscriptionsHeading.style.display = "none"; // Hide the heading
-  } else {
-    // Generate subscription cards if there are subscriptions
-    subscriptionsData.subscriptions.forEach((subscription) => {
-      const card = generateSubscriptionCard(subscription);
-      subscriptionsContainer.appendChild(card);
-    });
-  }
-});
+  // Add click event listener to card for toggling past payments
+  card.addEventListener("click", togglePastPayments);
+
+  return card;
+}
+
 
 const darkModeToggle = document.getElementById("mode-toggle");
 const body = document.body;
