@@ -505,7 +505,8 @@ button[type="submit"]:hover {
   cursor: pointer;
   padding: 10px 20px;
   margin-top: 20px;
-  width: 25%;
+  margin-left: -78px;
+  width: 215%;
 }
 
 .otp {

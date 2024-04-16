@@ -348,11 +348,11 @@ registrationForm.addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent the default form submission
 
   // Get the form inputs
-  const username = document.getElementById("username").value;
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirm-password").value;
+  const username = document.getElementById("username").value;
 
   // Make sure password and confirm password match
   if (password !== confirmPassword) {
@@ -360,7 +360,7 @@ registrationForm.addEventListener("submit", function (event) {
     return;
   }
 
-  // Make the API call
+  // Make the API call for registration
   fetch(
     "https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-signup",
     {
@@ -369,9 +369,10 @@ registrationForm.addEventListener("submit", function (event) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: username,
         email: email,
         password: password,
+        name: name,
+        username: username,
       }),
     }
   )
@@ -382,10 +383,18 @@ registrationForm.addEventListener("submit", function (event) {
       return response.json();
     })
     .then((data) => {
-      // If registration is successful, you might redirect the user or perform other actions
-      console.log("Registration successful:", data);
-      // Redirect user to manage.html after successful registration
+      // If registration is successful, get the username from the response
+      console.log("Registration successful. Username:", username);
+
+      // store the username in sessionStorage
+      sessionStorage.setItem("username", username);
+      console.log("username in session", username);
+
+      // Redirect user to enter OTP page
       window.location.href = "enter-otp.html";
+
+      // Call function to submit OTP with retrieved username
+      submitOTP(username);
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
