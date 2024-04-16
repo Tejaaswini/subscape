@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
       subscriptionsContainer.appendChild(card);
     });
   }
-});;
+});
 
 const darkModeToggle = document.getElementById("mode-toggle");
 const body = document.body;
@@ -267,6 +267,60 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.body.appendChild(popupContainer);
+  // Add event listener to the login form submission
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the username and password from the form inputs
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    // Make the API call
+    var loggedInUser = username;
+    console.log("logging in"); // Verify that loggedInUser is undefined
+    fetch(
+      "https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-signin",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // Verify that the username is retrieved correctly
+        // Store the username in sessionStorage
+        sessionStorage.setItem('username', username);
+        // Set the loggedInUser variable
+        loggedInUser = username;
+        console.log(loggedInUser); // Verify that loggedInUser holds the correct value
+        
+        // Display the loggedInUser in the HTML
+        const loggedInUserSpan = document.getElementById('loggedInUser');
+        console.log(loggedInUserSpan); // Verify that the element is found
+        if(loggedInUserSpan) {
+            loggedInUserSpan.textContent = loggedInUser;
+        } else {
+            console.error("Element with id 'loggedInUser' not found.");
+        }
+        // If login is successful, redirect to manage.html
+        window.location.href = "manage.html";
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+      console.log("logged in user: " + loggedInUser); // Verify that loggedInUser is undefined
+  });
 });
 
 document.addEventListener("DOMContentLoaded", function () {

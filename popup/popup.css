@@ -580,3 +580,8 @@ button[type="submit"]:hover {
 .light-mode .header-logo{
   background-image: url('logo-light.png'); /* Light mode logo */
 }
+
+.welcome-user {
+  margin-top: 50px;
+  font-size: 20px;
+}
