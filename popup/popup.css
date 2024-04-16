@@ -442,6 +442,7 @@ button[type="submit"]:hover {
   border: 2px solid #8d8d8d; /* Border color */
   border-radius: 15px;
   overflow: hidden;
+  background-color: #8d8d8d;
 }
 
 .item-image {
@@ -463,7 +464,8 @@ button[type="submit"]:hover {
 }
 
 .multi-select-checkbox:checked + .multi-select-label {
-  border-color: #007bff; /* Change border color when checked */
+  border-color: #45a049; /* Change border color when checked */
+  background-color: #45a049;
 }
 
 .multi-select-checkbox:checked + .multi-select-label:before {
@@ -584,4 +586,15 @@ button[type="submit"]:hover {
 .welcome-user {
   margin-top: 50px;
   font-size: 20px;
+}
+
+.reg-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  width: 25vw;
+  height: 5vh;
 }

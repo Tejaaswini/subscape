@@ -300,18 +300,18 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         console.log(data); // Verify that the username is retrieved correctly
         // Store the username in sessionStorage
-        sessionStorage.setItem('username', username);
+        sessionStorage.setItem("username", username);
         // Set the loggedInUser variable
         loggedInUser = username;
         console.log(loggedInUser); // Verify that loggedInUser holds the correct value
-        
+
         // Display the loggedInUser in the HTML
-        const loggedInUserSpan = document.getElementById('loggedInUser');
+        const loggedInUserSpan = document.getElementById("loggedInUser");
         console.log(loggedInUserSpan); // Verify that the element is found
-        if(loggedInUserSpan) {
-            loggedInUserSpan.textContent = loggedInUser;
+        if (loggedInUserSpan) {
+          loggedInUserSpan.textContent = loggedInUser;
         } else {
-            console.error("Element with id 'loggedInUser' not found.");
+          console.error("Element with id 'loggedInUser' not found.");
         }
         // If login is successful, redirect to manage.html
         window.location.href = "manage.html";
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
-      console.log("logged in user: " + loggedInUser); // Verify that loggedInUser is undefined
+    console.log("logged in user: " + loggedInUser); // Verify that loggedInUser is undefined
   });
 });
 
@@ -338,3 +338,56 @@ function confirmDelete() {
     // User clicked Cancel, do nothing.
   }
 }
+
+//-------------------------------------------------------------
+// Registration form
+//-------------------------------------------------------------
+const registrationForm = document.getElementById("registration-form");
+
+registrationForm.addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  // Get the form inputs
+  const username = document.getElementById("username").value;
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
+
+  // Make sure password and confirm password match
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
+
+  // Make the API call
+  fetch(
+    "https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-signup",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: password,
+      }),
+    }
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // If registration is successful, you might redirect the user or perform other actions
+      console.log("Registration successful:", data);
+      // Redirect user to manage.html after successful registration
+      window.location.href = "enter-otp.html";
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+});
