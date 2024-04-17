@@ -48,12 +48,22 @@
 // Get username from sessionStorage
 const username = sessionStorage.getItem('username');
 
-const subscriptionId = local.getItem('subscriptionId');
-console.log(subscriptionId);
+const subscriptions = localStorage.getItem('subscription');
+// parse the string to JSON
+const parsedSubscriptions = JSON.parse(subscriptions);
+
+const subscriptionId = parsedSubscriptions.subscriptionId;
 
 
-// Subscription ID
-// const subscriptionId = '9cfb94a8-4c29-48e6-a58c-b1f146b6f926'; // This is the ID you provided
+// prepopulate the form with the subscription details
+document.getElementById('update-name').value = parsedSubscriptions.name;
+document.getElementById('update-url').value = parsedSubscriptions.url;
+document.getElementById('update-plan').value = parsedSubscriptions.plan;
+document.getElementById('update-start-date').value = parsedSubscriptions.start_date;
+document.getElementById('update-cost').value = parsedSubscriptions.cost;
+document.getElementById('update-last-payment-date').value = parsedSubscriptions.last_payment_date;
+document.getElementById('update-category').value = parsedSubscriptions.category;
+
 
 // Function to update subscription
 async function updateSubscription() {

@@ -124,7 +124,7 @@ function generateSubscriptionCard(subscription) {
     document.querySelectorAll(".settings-dropdown").forEach((dropdown) => {
       dropdown.remove();
     });
-
+    localStorage.setItem("subscription", JSON.stringify(subscription));
     const dropdown = document.createElement("div");
     dropdown.classList.add("settings-dropdown");
     dropdown.innerHTML = `
