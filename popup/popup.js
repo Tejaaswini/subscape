@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then((data) => {
       console.log(data); // Verify that the data is retrieved correctly
+      allSubscriptions = localStorage.setItem("allSubscriptions", JSON.stringify(data));
       // Check if subscriptions data exists and is an array
       if (!data || data.length === 0) {
         noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscriptions to show"; // Display the shrug emoji
