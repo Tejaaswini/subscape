@@ -22,11 +22,108 @@
         <form id="update-form" class="update-form">
             <input type="text" id="update-name" class="update-name" placeholder="Update Name">
             <input type="text" id="update-url" class="update-url" placeholder="Update URL">
-            <input type="text" id="update-amount" class="update-amount" placeholder="Update Amount">
-            <input type="date" id="update-date" class="update-date" placeholder="Update Date">
-            <button id="update" class="update-btn">Update</button>
+            <select id="update-plan" class="update-plan">
+                <option value="weekly">Weekly</option>
+                <option value="biweekly">Biweekly</option>
+                <option value="quaterly">Quaterly</option>
+                <option value="half-yearly">Half-Yearly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+            <input type="date" id="update-start-date" class="update-start-date" placeholder="Update Start Date">
+            <input type="text" id="update-cost" class="update-cost" placeholder="Update Cost">
+            <input type="date" id="update-last-payment-date" class="update-last-payment-date" placeholder="Update Last Payment Date">
+            <select id="update-category" class="update-category">
+                <option value="ott">OTT</option>
+                <option value="gaming">Gaming</option>
+                <option value="streaming">Streaming</option>
+                <option value="delivery">Delivery</option>
+            </select>
+            <button type="submit" id="update" class="update-btn">Update</button>
         </form>
+        
+        
     </div>
     <script src="popup.js"></script>
+    <script>
+// Get username from sessionStorage
+const username = sessionStorage.getItem('username');
+
+const subscriptionId = local.getItem('subscriptionId');
+console.log(subscriptionId);
+
+
+// Subscription ID
+// const subscriptionId = '9cfb94a8-4c29-48e6-a58c-b1f146b6f926'; // This is the ID you provided
+
+// Function to update subscription
+async function updateSubscription() {
+    // Get updated values from the form
+    const name = document.getElementById('update-name').value;
+    const url = document.getElementById('update-url').value;
+    const cost = document.getElementById('update-cost').value;
+    const start_date = document.getElementById('update-start-date').value;
+    const plan = document.getElementById('update-plan').value;
+    const last_payment_date = document.getElementById('update-last-payment-date').value;
+    const category = document.getElementById('update-category').value;
+
+    // API endpoint
+    const apiUrl = `https://7se83qeyid.execute-api.us-east-1.amazonaws.com/dev/v2/subscriptions/${subscriptionId}?username=${username}`;
+
+    // Data to be sent in the request
+    // const data = {
+    //     name: name,
+    //     url: url,
+    //     cost: amount,
+    //     start_date: date
+    // };
+    // cost should not be a float
+
+    const data = {
+    name: name,
+    plan: plan,
+    start_date: start_date,
+    cost: parseFloat(cost),
+    last_payment_date: last_payment_date,
+    category: category
+    }
+
+//     const data = {
+//   "name": "test-subscription-name",
+//   "plan": "monthly",
+//   "start_date": "2024-04-30",
+//   "cost": 122.04,
+//   "last_payment_date": "2024-04-30",
+//   "category": "ott"
+//     };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update subscription');
+        }
+
+        // Subscription updated successfully
+        console.log('Subscription updated successfully');
+        window.location.href = 'manage.html'; // Redirect to manage.html
+    } catch (error) {
+        console.error('Error updating subscription:', error.message);
+    }
+}
+
+// Event listener for form submission
+document.getElementById('update-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    updateSubscription(); // Call function to update subscription
+});
+
+
+    </script>
 </body>
 </html>
