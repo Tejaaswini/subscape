@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Subhub",
+    "name": "subscape",
     "version": "1.0",
     "description": "Manage OTT and other subscriptions.",
     "permissions": ["activeTab"],
