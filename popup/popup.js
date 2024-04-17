@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         noCardsContainer.innerHTML = "¯\\_(ツ)_/¯ No subscriptions to show"; // Display the shrug emoji
         subscriptionsHeading.style.display = "none"; // Hide the heading
       } else {
+        allSubscriptions = localStorage.setItem("allSubscriptions", JSON.stringify(data));
         // Iterate over each subscription object and create subscription cards
         data.forEach((subscription) => {
           console.log("subzzzzz",subscription); // Verify that the subscription data is correct
@@ -38,10 +39,32 @@ document.addEventListener("DOMContentLoaded", function () {
           const plan = subscription.plan;
           const startDate = subscription.start_date;
           const cost = subscription.cost;
-          const icon = subscription.icon;
+          let icon = subscription.icon;
           const lastPaymentDate = subscription.last_payment_date;
           const category = subscription.category;
           const subscriptionId = subscription.uuid;
+
+          // Check if the URL contains "netflix"
+        if (url.includes("netflix")) {
+          // Set the icon to the Netflix logo
+          icon = "./logos/netflix.png";
+        }
+        if (url.includes("spotify")) {
+          // Set the icon to the Spotify logo
+          icon = "./logos/spotify.png";
+        }
+        if (url.includes("hulu")) {
+          // Set the icon to the Amazon logo
+          icon = "./logos/hulu.png";
+        }
+        if (url.includes("instacart")) {
+          // Set the icon to the Instacart logo
+          icon = "./logos/instacart.png";
+        }
+        if (url.includes("mint")) {
+          // Set the icon to the Mint logo
+          icon = "./logos/mint.png";
+        }
 
           // Now you can use these variables to create your subscription card or perform other operations
           console.log("Name:", name);
