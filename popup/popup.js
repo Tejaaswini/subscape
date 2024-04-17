@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const icon = subscription.icon;
           const lastPaymentDate = subscription.last_payment_date;
           const category = subscription.category;
+          const subscriptionId = subscription.uuid;
 
           // Now you can use these variables to create your subscription card or perform other operations
           console.log("Name:", name);
@@ -52,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("Icon:", icon);
           console.log("Last Payment Date:", lastPaymentDate);
           console.log("Category:", category);
+          console.log("Subscription ID:", subscriptionId);
 
           // Create subscription card using these variables
           const subscriptionCard = generateSubscriptionCard({
@@ -63,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
             cost: cost,
             icon: icon,
             last_payment_date: lastPaymentDate,
-            category: category
+            category: category,
+            subscriptionId: subscriptionId
           });
 
           // Append subscription card to container
@@ -125,22 +128,63 @@ function generateSubscriptionCard(subscription) {
     const dropdown = document.createElement("div");
     dropdown.classList.add("settings-dropdown");
     dropdown.innerHTML = `
-                <a href="update.html"><img src="update.png" alt="Update" />Update</a>
-                <a href="${subscription.settingsUrl}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
-                <a href="#" onclick="confirmDelete()"><img src="delete.png" alt="Delete" />Delete</a>
-            `;
+    <a href="update.html"><img src="update.png" alt="Update" />Update</a>
+    <a href="${subscription.settingsUrl}" target="_blank"><img src="deets.png" alt="Details" />Details</a>
+    <a href="#" id="delete-link" class="delete-link"><img src="delete.png" alt="Delete" />Delete</a>
+`;
 
-    const cardRect = card.getBoundingClientRect();
-    dropdown.style.top = `${cardRect.bottom - 30}px`;
-    document.body.appendChild(dropdown);
+const cardRect = card.getBoundingClientRect();
+dropdown.style.top = `${cardRect.bottom - 30}px`;
+document.body.appendChild(dropdown);
 
-    document.addEventListener("click", function (e) {
-      if (!dropdown.contains(e.target) && !settingsBtn.contains(e.target)) {
+// Close the dropdown when clicking outside of it or on the settings button
+document.addEventListener("click", function (e) {
+    if (!dropdown.contains(e.target) && e.target !== settingsBtn) {
         dropdown.remove();
-      }
+    }
+});
+
+// Prevent the default action of the delete link and show confirmation
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteLink = document.getElementById("delete-link");
+
+    deleteLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        const subscriptionId = subscription.subscriptionId; // Retrieve subscriptionId
+        confirmDelete(subscriptionId);
+        event.stopPropagation();
     });
 
-    event.stopPropagation();
+    // Define the confirmDelete function
+    function confirmDelete(subscriptionId) {
+        console.log("Subscription ID to delete:", subscriptionId);
+        if (confirm("Are you sure you want to delete the subscription?")) {
+            const username = sessionStorage.getItem("username");
+            if (!username) {
+                console.error("Username not found in sessionStorage.");
+                alert("Username not found.");
+                return;
+            }
+
+            fetch(`https://7se83qeyid.execute-api.us-east-1.amazonaws.com/dev/v2/subscriptions/${subscriptionId}?username=${username}`, {
+                method: "DELETE"
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to delete subscription");
+                }
+                // Optionally, you can remove the subscription card from the UI here
+                // For example: subscriptionCard.remove();
+            })
+            .catch(error => {
+                console.error("Error deleting subscription:", error);
+            });
+        }
+    }
+});
+
+
+
   });
 
   detailsContainer.appendChild(icon);
@@ -226,6 +270,39 @@ document.addEventListener("DOMContentLoaded", function () {
   forgotPassword.classList.add("forgot-password");
   forgotPassword.textContent = "Forgot password?";
   forgotPassword.setAttribute("href", "./forgot-password.html");
+
+// Add event listener to handle password reset process
+forgotPassword.addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent default link behavior
+
+  // Retrieve the username from sessionStorage
+  const username = sessionStorage.getItem("username");
+
+  // Send a POST request to the forgot password API endpoint
+  fetch("https://fw79wa9t2e.execute-api.us-east-1.amazonaws.com/dev/auth-forgot-password", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username: username })
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error("Failed to initiate password reset process");
+      }
+      // Handle successful response (e.g., show a success message)
+      alert("OTP sent successfully. Please check your email.");
+      window.location.href = "./forgot-password.html";
+  })
+  .catch(error => {
+      console.error("Error:", error);
+      // Handle error (e.g., show an error message)
+      alert("Failed to initiate password reset process. Please try again later.");
+  });
+});
+
+// Append the 'Forgot password?' link to the document body or appropriate container
+document.body.appendChild(forgotPassword);
 
   const submitButton = document.createElement("button");
   submitButton.setAttribute("type", "submit");
@@ -319,13 +396,34 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function confirmDelete() {
-  if (confirm("Are you sure you want to delete the subscription?")) {
-    // User clicked OK, add code here to delete the subscription.
-  } else {
-    // User clicked Cancel, do nothing.
-  }
-}
+// function confirmDelete(subscriptionId) {
+//   console.log("Subscription ID in delete:", subscriptionId);
+//   if (confirm("Are you sure you want to delete the subscription?")) {
+//     // get the subscription ID from the card
+//     const username = sessionStorage.getItem("username");
+//     if (!username) {
+//       console.error("Username not found in sessionStorage.");
+//       alert("Username not found.");
+//       return;
+//     }
+
+//     fetch(`https://7se83qeyid.execute-api.us-east-1.amazonaws.com/dev/v2/subscriptions/${subscriptionId}?username=${username}`, {
+//       method: "DELETE"
+//     })
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error("Failed to delete subscription");
+//       }
+//       // Optionally, you can remove the subscription card from the UI here
+//       // For example: subscriptionCard.remove();
+//     })
+//     .catch(error => {
+//       console.error("Error deleting subscription:", error);
+//     });
+//   }
+// }
+
+
 
 //-------------------------------------------------------------
 // Registration form
@@ -388,3 +486,64 @@ registrationForm.addEventListener("submit", function (event) {
       console.error("There was a problem with the fetch operation:", error);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const updateBtn = document.getElementById("update");
+
+    updateBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const updateName = document.getElementById("update-name").value;
+        const updateUrl = document.getElementById("update-url").value;
+        const updateAmount = document.getElementById("update-amount").value;
+        const updateDate = document.getElementById("update-date").value;
+
+        const updatedSubscription = {
+            name: updateName,
+            url: updateUrl,
+            cost: parseFloat(updateAmount),
+            start_date: updateDate,
+            plan: "plan", // Assuming plan is fixed, otherwise pass it dynamically
+            last_payment_date: "2021-09-01", // Assuming last payment date is fixed, otherwise pass it dynamically
+            category: "category" // Assuming category is fixed, otherwise pass it dynamically
+        };
+
+        updateSubscription(updatedSubscription);
+    });
+
+    function updateSubscription(subscription) {
+        const { name, url, start_date, cost, plan, last_payment_date, category } = subscription;
+
+        fetch(`https://7se83qeyid.execute-api.us-east-1.amazonaws.com/dev/v2/subscriptions/${subscriptionId}?username=${username}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                url: url,
+                start_date: start_date,
+                cost: cost,
+                plan: plan,
+                last_payment_date: last_payment_date,
+                category: category
+            }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data); // Log the response data if needed
+            // Redirect to manage.html after successful update
+            window.location.href = "manage.html";
+        })
+        .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+        });
+    }
+});
+
+
